@@ -1,0 +1,17 @@
+{
+  "status": "passed",
+  "participants": 20,
+  "segments": 120,
+  "plots": 120,
+  "cycle_rows": 975,
+  "checks": [
+    "source SHA256 unchanged",
+    "whole recording reconstructed exactly including preserved edges",
+    "contiguous nonoverlapping sample intervals",
+    "original/reordered array equivalence",
+    "full-record filter reproduction",
+    "independent duration and amplitude recalculation",
+    "all 32 feature columns independently aggregated",
+    "all plots decoded"
+  ]
+}

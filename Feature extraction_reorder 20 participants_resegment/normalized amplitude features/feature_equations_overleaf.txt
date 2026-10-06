@@ -1,0 +1,28 @@
+\documentclass[11pt]{article}
+\usepackage[a4paper,margin=22mm]{geometry}
+\usepackage{amsmath,booktabs,longtable,hyperref}
+\begin{document}
+\title{Normalized amplitude features: 12 equations}\author{PCG-BP analysis version 2}\date{}\maketitle
+For each complete adjacent S1-S2-S1 cycle, a, b, c, d, e denote S1 onset, S1 offset, S2 onset, S2 offset and next S1 onset, in zero-based recording samples. They must satisfy a < b < c < d < e. Sampling frequency is f\_s. States use half-open sample intervals [a,b), [b,c), [c,d), [d,e).
+
+Only complete cycles contained in a segment contribute. The next S1 onset may equal the exclusive segment end; its waveform belongs to the next segment. Detection is performed once over the whole recording.
+
+Normalize the filtered waveform separately within each saved segment to zero mean and unit population SD. L is the number of segment samples. A\_Q is the mean absolute normalized waveform amplitude over state Q, not an envelope peak or RMS. Exclude a cycle if any state amplitude is at most 1e-12. All six ratios use the same valid-cycle pool.
+\[z[n]=\frac{x[n]-\mu_x}{\sigma_x},\quad \mu_x=\frac{1}{L}\sum_n x[n],\quad \sigma_x=\sqrt{\frac{1}{L}\sum_n(x[n]-\mu_x)^2}\]
+\[A_{Q,i}=\frac{1}{|I_{Q,i}|}\sum_{n\in I_{Q,i}}|z[n]|\]
+\begin{longtable}{lll}\toprule Quantity & Equation & Output columns\\\midrule
+Amp\_SysS1 & $A_{Sys,i}/A_{S1,i}$ & m\_Amp\_SysS1, sd\_Amp\_SysS1\\
+Amp\_DiaS2 & $A_{Dia,i}/A_{S2,i}$ & m\_Amp\_DiaS2, sd\_Amp\_DiaS2\\
+Amp\_S1S2 & $A_{S1,i}/A_{S2,i}$ & m\_Amp\_S1S2, sd\_Amp\_S1S2\\
+Amp\_S1Dia & $A_{S1,i}/A_{Dia,i}$ & m\_Amp\_S1Dia, sd\_Amp\_S1Dia\\
+Amp\_SysDia & $A_{Sys,i}/A_{Dia,i}$ & m\_Amp\_SysDia, sd\_Amp\_SysDia\\
+Amp\_S2Sys & $A_{S2,i}/A_{Sys,i}$ & m\_Amp\_S2Sys, sd\_Amp\_S2Sys\\
+\bottomrule\end{longtable}
+\section*{Aggregation within each segment}
+\[m_q=\frac{1}{K}\sum_{i=1}^{K}q_i,\qquad sd_q=\sqrt{\frac{1}{K-1}\sum_{i=1}^{K}(q_i-m_q)^2}.\]
+Ratios are calculated per cycle, then averaged. Sample SD uses $K-1$, an explicit implementation convention. Mean is NaN for $K=0$; SD is NaN for $K<2$. Invalid or ambiguous cycles are excluded, never bridged or filled with zero.
+
+\section*{Reference and adaptations}
+Tang et al. (2018), \emph{PCG Classification Using Multidomain Features and SVM Classifier}, Tables 1--2 and Sections 2.3--2.5.3. \url{https://doi.org/10.1155/2018/4205027}.
+The feature definitions follow the paper. This project retains its 30--500 Hz Butterworth filter and timing-based detector instead of the paper's 10 Hz high-pass, spike removal and Springer HSMM.
+\end{document}

@@ -1,0 +1,31 @@
+\documentclass[11pt]{article}
+\usepackage[a4paper,margin=22mm]{geometry}
+\usepackage{amsmath,booktabs,longtable,hyperref}
+\begin{document}
+\title{Time-domain features: 20 equations}\author{PCG-BP analysis version 2}\date{}\maketitle
+For each complete adjacent S1-S2-S1 cycle, a, b, c, d, e denote S1 onset, S1 offset, S2 onset, S2 offset and next S1 onset, in zero-based recording samples. They must satisfy a < b < c < d < e. Sampling frequency is f\_s. States use half-open sample intervals [a,b), [b,c), [c,d), [d,e).
+
+Only complete cycles contained in a segment contribute. The next S1 onset may equal the exclusive segment end; its waveform belongs to the next segment. Detection is performed once over the whole recording.
+
+Intervals are in seconds; ratios are dimensionless. RR is a PCG cycle-period surrogate from consecutive S1 onsets, not an ECG-measured RR. T\_S1, T\_Sys, T\_S2 and T\_Dia denote IntS1, IntSys, IntS2 and IntDia. All ten quantities use the same complete-cycle pool.
+\[RR_i=T_{S1,i}+T_{Sys,i}+T_{S2,i}+T_{Dia,i}\]
+\begin{longtable}{lll}\toprule Quantity & Equation & Output columns\\\midrule
+RR & $(e_i-a_i)/f_s$ & m\_RR, sd\_RR\\
+IntS1 & $(b_i-a_i)/f_s$ & m\_IntS1, sd\_IntS1\\
+IntS2 & $(d_i-c_i)/f_s$ & m\_IntS2, sd\_IntS2\\
+IntSys & $(c_i-b_i)/f_s$ & m\_IntSys, sd\_IntSys\\
+IntDia & $(e_i-d_i)/f_s$ & m\_IntDia, sd\_IntDia\\
+Ratio\_SysRR & $T_{Sys,i}/RR_i$ & m\_Ratio\_SysRR, sd\_Ratio\_SysRR\\
+Ratio\_DiaRR & $T_{Dia,i}/RR_i$ & m\_Ratio\_DiaRR, sd\_Ratio\_DiaRR\\
+Ratio\_SysDia & $T_{Sys,i}/T_{Dia,i}$ & m\_Ratio\_SysDia, sd\_Ratio\_SysDia\\
+Ratio\_S1RR & $T_{S1,i}/RR_i$ & m\_Ratio\_S1RR, sd\_Ratio\_S1RR\\
+Ratio\_S2RR & $T_{S2,i}/RR_i$ & m\_Ratio\_S2RR, sd\_Ratio\_S2RR\\
+\bottomrule\end{longtable}
+\section*{Aggregation within each segment}
+\[m_q=\frac{1}{K}\sum_{i=1}^{K}q_i,\qquad sd_q=\sqrt{\frac{1}{K-1}\sum_{i=1}^{K}(q_i-m_q)^2}.\]
+Ratios are calculated per cycle, then averaged. Sample SD uses $K-1$, an explicit implementation convention. Mean is NaN for $K=0$; SD is NaN for $K<2$. Invalid or ambiguous cycles are excluded, never bridged or filled with zero.
+
+\section*{Reference and adaptations}
+Tang et al. (2018), \emph{PCG Classification Using Multidomain Features and SVM Classifier}, Tables 1--2 and Sections 2.3--2.5.3. \url{https://doi.org/10.1155/2018/4205027}.
+The feature definitions follow the paper. This project retains its 30--500 Hz Butterworth filter and timing-based detector instead of the paper's 10 Hz high-pass, spike removal and Springer HSMM.
+\end{document}

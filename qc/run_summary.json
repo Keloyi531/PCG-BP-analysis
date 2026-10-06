@@ -1,0 +1,57 @@
+{
+  "participants": 20,
+  "segments": 120,
+  "valid_timing_cycles": 975,
+  "valid_amplitude_cycles": 975,
+  "segments_requiring_review": [
+    {
+      "original_id": 19,
+      "reordered_id": 6,
+      "segment_id": 1,
+      "start_sample": 1827,
+      "end_sample": 22194,
+      "start_s": 0.9135,
+      "end_s": 11.097,
+      "duration_s": 10.1835,
+      "n_samples": 20367,
+      "n_valid_timing_cycles": 1,
+      "n_valid_amplitude_cycles": 1,
+      "review_flag": "fewer_than_two_valid_cycles",
+      "npz": "data\\Participant_19\\segment_01.npz",
+      "plot": "S1S2 detection\\Participant_19\\segment_01.png"
+    },
+    {
+      "original_id": 41,
+      "reordered_id": 12,
+      "segment_id": 1,
+      "start_sample": 1111,
+      "end_sample": 21343,
+      "start_s": 0.5555,
+      "end_s": 10.6715,
+      "duration_s": 10.116,
+      "n_samples": 20232,
+      "n_valid_timing_cycles": 1,
+      "n_valid_amplitude_cycles": 1,
+      "review_flag": "fewer_than_two_valid_cycles",
+      "npz": "data\\Participant_41\\segment_01.npz",
+      "plot": "S1S2 detection\\Participant_41\\segment_01.png"
+    },
+    {
+      "original_id": 72,
+      "reordered_id": 19,
+      "segment_id": 1,
+      "start_sample": 2361,
+      "end_sample": 22657,
+      "start_s": 1.1805,
+      "end_s": 11.3285,
+      "duration_s": 10.148,
+      "n_samples": 20296,
+      "n_valid_timing_cycles": 0,
+      "n_valid_amplitude_cycles": 0,
+      "review_flag": "fewer_than_two_valid_cycles",
+      "npz": "data\\Participant_72\\segment_01.npz",
+      "plot": "S1S2 detection\\Participant_72\\segment_01.png"
+    }
+  ],
+  "plots": 120
+}
